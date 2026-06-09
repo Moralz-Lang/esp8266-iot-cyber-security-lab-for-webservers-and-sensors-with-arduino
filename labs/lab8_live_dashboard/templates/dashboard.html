@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 8 IoT Dashboard</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+}
+
+.card {
+  background: #1e293b;
+  margin: 20px auto;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>ESP8266 Live Dashboard</h1>
+
+<div class="card">
+<h2>Temperature</h2>
+<div id="temp" class="value">--</div>
+</div>
+
+<div class="card">
+<h2>Humidity</h2>
+<div id="hum" class="value">--</div>
+</div>
+
+<div class="card">
+<h2>Device Status</h2>
+<div id="status">Waiting...</div>
+</div>
+
+<script>
+
+async function updateData() {
+
+  const res = await fetch("/latest");
+  const data = await res.json();
+
+  if (!data.temperature) return;
+
+  document.getElementById("temp").innerHTML =
+    data.temperature + " °C";
+
+  document.getElementById("hum").innerHTML =
+    data.humidity + " %";
+
+  document.getElementById("status").innerHTML =
+    "Device Online";
+}
+
+setInterval(updateData, 3000);
+updateData();
+
+</script>
+
+</body>
+</html>
