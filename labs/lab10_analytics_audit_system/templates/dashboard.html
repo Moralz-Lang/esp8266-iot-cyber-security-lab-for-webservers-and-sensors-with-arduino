@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 10 Dashboard</title>
+</head>
+<body>
+
+<h1>IoT Analytics Dashboard</h1>
+
+<a href="/inventory">Inventory</a> |
+<a href="/history">History</a> |
+<a href="/audit">Audit</a> |
+<a href="/export">Export CSV</a>
+
+<div id="latest"></div>
+
+<script>
+
+async function load(){
+
+  const res = await fetch("/devices");
+  const data = await res.json();
+
+  let html = "";
+
+  for(let id in data){
+    html += "<h3>"+id+"</h3>";
+    html += "<p>"+data[id].temperature+" °C</p>";
+    html += "<p>"+data[id].humidity+" %</p>";
+  }
+
+  document.getElementById("latest").innerHTML = html;
+}
+
+setInterval(load,3000);
+load();
+
+</script>
+
+</body>
+</html>
