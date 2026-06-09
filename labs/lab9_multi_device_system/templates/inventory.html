@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Device Inventory</h1>
+
+<div id="devices"></div>
+
+<script>
+
+async function load() {
+
+  const res = await fetch("/devices");
+  const data = await res.json();
+
+  let html = "";
+
+  for (let id in data) {
+
+    html += `
+      <div style="padding:10px;margin:10px;background:#ddd;">
+        <h3>${id}</h3>
+        <p>${data[id].temperature} °C</p>
+        <p>${data[id].humidity} %</p>
+        <p>${data[id].last_seen}</p>
+      </div>
+    `;
+  }
+
+  document.getElementById("devices").innerHTML = html;
+}
+
+setInterval(load, 3000);
+load();
+
+</script>
+
+</body>
+</html>
