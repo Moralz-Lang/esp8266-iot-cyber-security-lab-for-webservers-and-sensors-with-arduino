@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 9 Dashboard</title>
+</head>
+<body>
+
+<h1>Multi Device Dashboard</h1>
+
+<a href="/inventory">Inventory</a>
+
+<div id="latest"></div>
+
+<script>
+
+async function load() {
+
+  const res = await fetch("/latest");
+  const d = await res.json();
+
+  document.getElementById("latest").innerHTML =
+    "Device: " + d.device_id +
+    "<br>Temp: " + d.temperature +
+    "<br>Humidity: " + d.humidity;
+}
+
+setInterval(load, 3000);
+load();
+
+</script>
+
+</body>
+</html>
